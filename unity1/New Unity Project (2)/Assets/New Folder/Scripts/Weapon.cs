@@ -16,7 +16,8 @@ public class Weapon : MonoBehaviour
     static int interval =1 ;
     private List<Bulnode> projectiles;
 
-
+    int shot_interval = 13;
+    int perShotInterval = 0;
     private void Start()
     {
 
@@ -26,9 +27,14 @@ public class Weapon : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetButtonDown("Fire1"))
+        if (Input.GetButton("Fire1"))
         {
-            Shoot();
+            perShotInterval++;
+            if (perShotInterval>shot_interval)
+            {
+                perShotInterval = 0;
+                Shoot();
+            }
         }
 
 

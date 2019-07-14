@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class ShootMe : MonoBehaviour
 {
-    public float speed = 20f;
+    public float speed = 200f;
     public Rigidbody2D rb;
     public GameObject firepnt;
     Weapon weapon;
