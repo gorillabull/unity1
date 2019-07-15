@@ -8,6 +8,7 @@ struct Bulnode
     public GameObject p;
     public int dur; 
 }
+
 public class Weapon : MonoBehaviour
 {
     public Transform firepoint;
@@ -17,6 +18,8 @@ public class Weapon : MonoBehaviour
     private List<Bulnode> projectiles;
 
     int shot_interval = 13;
+    int time_Since_last_shot = 0;
+
     int perShotInterval = 0;
     private void Start()
     {
@@ -27,14 +30,32 @@ public class Weapon : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        
         if (Input.GetButton("Fire1"))
         {
-            perShotInterval++;
-            if (perShotInterval>shot_interval)
+            //pl didnt shoot in last frame 
+            //still check if they shot recently 
+            if (time_Since_last_shot>1)
             {
-                perShotInterval = 0;
-                Shoot();
+                time_Since_last_shot = 0;
+
+                if (perShotInterval > shot_interval)
+                {
+                    perShotInterval = 0;
+                    Shoot();
+                }
             }
+            else
+            {
+                time_Since_last_shot = 0;
+                perShotInterval++;
+                if (perShotInterval > shot_interval)
+                {
+                    perShotInterval = 0;
+                    Shoot();
+                }
+            }
+            
         }
 
 
@@ -53,6 +74,8 @@ public class Weapon : MonoBehaviour
             }
         }
 
+        perShotInterval++;
+        time_Since_last_shot++;
     }
 
     private void Shoot()

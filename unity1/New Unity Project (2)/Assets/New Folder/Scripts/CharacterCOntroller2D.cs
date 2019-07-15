@@ -13,6 +13,11 @@ public class CharacterCOntroller2D : MonoBehaviour
     private int count;
     public Text countText;
     public Text WinText;
+    public Text lvlText;
+    int xpCount;
+    int toNextLvl;
+
+    public GameObject panel;
 
     // Start is called before the first frame update
     void Start()
@@ -21,6 +26,9 @@ public class CharacterCOntroller2D : MonoBehaviour
         count = 0;
         SetCountText();
         WinText.text = "";
+        lvlText.text = "";
+        xpCount = toNextLvl = 0;
+        toNextLvl = 2;
     }
 
     // Update is called once per frame
@@ -45,6 +53,20 @@ public class CharacterCOntroller2D : MonoBehaviour
             count = count + 1;
             SetCountText();
         }
+        if (other.gameObject.CompareTag("bac1"))
+        {
+            other.gameObject.SetActive(false);
+            //hide it
+            xpCount++;
+            lvlText.text = xpCount.ToString() +
+                "/" + toNextLvl.ToString();
+
+        }
+
+        if (xpCount>10)
+        {
+            panel.SetActive(true);
+        }
     }
 
     private void SetCountText()
@@ -54,5 +76,12 @@ public class CharacterCOntroller2D : MonoBehaviour
         {
             WinText.text = "Win!";
         }
+    }
+
+    public void TakeDamage(int damage)
+    {
+        xpCount--;
+        lvlText.text = xpCount.ToString() +
+                 "/" + toNextLvl.ToString();
     }
 }
