@@ -10,6 +10,7 @@ public class ShootMe : MonoBehaviour
     public GameObject firepnt;
     public  AudioSource source;
     public AudioClip a;
+    public ParticleSystem ps;
     Weapon weapon;
 
     // Start is called before the first frame update
@@ -36,6 +37,9 @@ public class ShootMe : MonoBehaviour
                 enemy.TakeDamage(45);
               
                 source.PlayOneShot(a, 1);
+
+      
+
 
                 Destroy(gameObject);
 

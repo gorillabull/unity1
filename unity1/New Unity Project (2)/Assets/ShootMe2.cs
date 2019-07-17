@@ -9,7 +9,7 @@ public class ShootMe2 : MonoBehaviour
     public Rigidbody2D rb;
     public GameObject firepnt;
     Weapon weapon;
-
+    public ParticleSystem ps;
     // Start is called before the first frame update
     void Start()
     {
@@ -31,6 +31,7 @@ public class ShootMe2 : MonoBehaviour
         {
             if (enemy.name == "Player")
             {
+                ps.Emit(5);
                 enemy.TakeDamage(45);
                 Destroy(gameObject);
 
