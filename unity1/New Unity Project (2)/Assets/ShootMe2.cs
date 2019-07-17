@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+//script used by the projectiles from the germs 
 public class ShootMe2 : MonoBehaviour
 {
     public float speed = 25f;

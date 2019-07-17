@@ -7,6 +7,7 @@ public class Enemy : MonoBehaviour
 {
 
     public int hp = 100;
+    public int split_damage_min = 10;
     public GameObject deathEff;
     public GameObject bac1;
     public GameObject player;
@@ -42,6 +43,10 @@ public class Enemy : MonoBehaviour
     public void TakeDamage(int damage)
     {
         hp -= damage;
+        int fragSpawn = damage / split_damage_min;
+        FragSpawn(fragSpawn);
+
+
         if (hp<=0)
         {
             Die();
@@ -62,25 +67,33 @@ public class Enemy : MonoBehaviour
         }    
     }
 
+    private void FragSpawn(int count)
+    {
+        for (int i = 1; i < r.Next(count, count+5); i++)
+        {
+            Instantiate(bac1,
+                new Vector3(
+            gameObject.transform.position.x + r.Next(1, 10),
+            gameObject.transform.position.y + r.Next(1, 10)),
+            transform.rotation);
+        }
+    }
     // Update is called once per frame
     void Update()
     {
         //for rotation 
-        Vector2 direction = player.transform.position 
-            - transform.position;
+        Vector2 direction = player.transform.position - transform.position;
         float angle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
         Quaternion rot = Quaternion.AngleAxis(angle, Vector3.forward);
         transform.rotation = Quaternion.Slerp(transform.rotation, rot, 5f * Time.deltaTime);
 
         //movement
         R = R * t; 
-        x = 4 * (float)Math.Cos(t);
+        x = 4 * (float)Math.Cos(t); 
         y = 3  * (float)Math.Sin(t);
         t += .01f;
 
-        transform.position = new Vector3(
-            x,
-            y, 0);
+        //  transform.position = new Vector3(x,y, 0);
 
 
         //GameObject res = Instantiate(bullet, firepoint.position, firepoint.rotation);
