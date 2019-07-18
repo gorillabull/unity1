@@ -7,7 +7,6 @@ public class ShootMe : MonoBehaviour
 {
     public float speed = 200f;
     public Rigidbody2D rb;
-    public GameObject firepnt;
     public  AudioSource source;
     public AudioClip a;
     public ParticleSystem ps;
@@ -16,7 +15,7 @@ public class ShootMe : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        rb.velocity = firepnt.transform.right * speed;
+      //  rb.velocity = firepnt.transform.right * speed;
         
     }
 
@@ -37,11 +36,7 @@ public class ShootMe : MonoBehaviour
                 enemy.TakeDamage(45);
               
                 source.PlayOneShot(a, 1);
-
-      
-
-
-                Destroy(gameObject);
+                 Destroy(gameObject);
 
             }
 
@@ -50,9 +45,21 @@ public class ShootMe : MonoBehaviour
                 enemy.TakeDamage(45);
                 Destroy(gameObject);
             }
-                
+            if (enemy.name == "bigball2(Clone)")
+            {
+                enemy.TakeDamage(45);
+                Destroy(gameObject);
+            }
+
+
         }
         
 
     }
+
+    public void InstantiateMe(Vector3 dir)
+    {
+        rb.velocity = dir * speed;
+    }
+   
 }

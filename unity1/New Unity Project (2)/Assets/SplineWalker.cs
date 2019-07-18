@@ -14,7 +14,7 @@ public class SplineWalker : MonoBehaviour
         progress += Time.deltaTime / duration;
         if (progress > 1f)
         {
-            progress = 1f;
+            progress = 0f;
         }
         transform.localPosition = spline.GetPoint(progress);
     }

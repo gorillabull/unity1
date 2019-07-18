@@ -9,11 +9,11 @@ public class ShootMe2 : MonoBehaviour
     public Rigidbody2D rb;
     public GameObject firepnt;
     Weapon weapon;
-    public ParticleSystem ps;
+     ParticleSystem ps;
     // Start is called before the first frame update
     void Start()
     {
-        rb.velocity = firepnt.transform.right * speed;
+       // rb.velocity = firepnt.transform.right * speed;
 
     }
 
@@ -40,6 +40,10 @@ public class ShootMe2 : MonoBehaviour
         }
 
 
+    }
+    public void InstantiateMe(Vector3 direction )
+    {
+        rb.velocity = direction * speed;
     }
 
 

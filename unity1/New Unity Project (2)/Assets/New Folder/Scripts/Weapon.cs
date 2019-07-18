@@ -69,8 +69,9 @@ public class Weapon : MonoBehaviour
 
             if (projectiles[i].dur<=0)
             {
-                Destroy(projectiles[i].p);
                 projectiles.Remove(projectiles[i]);
+                Destroy(projectiles[i].p);
+                
             }
         }
 
@@ -81,11 +82,15 @@ public class Weapon : MonoBehaviour
     private void Shoot()
     {
 
-        GameObject res =  Instantiate(bullet1, firepoint.position, firepoint.rotation);
+        GameObject res =  Instantiate(bullet1, transform.position, transform.rotation);
+        ShootMe sm = res.GetComponent<ShootMe>();
+        sm.InstantiateMe(transform.right);
         Bulnode bn = new Bulnode();
         bn.p = res;
         bn.dur = duration;
         projectiles.Add(bn);
 
     }
+
+    
 }

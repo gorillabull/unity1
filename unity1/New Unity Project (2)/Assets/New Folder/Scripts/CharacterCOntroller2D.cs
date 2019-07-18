@@ -14,10 +14,15 @@ public class CharacterCOntroller2D : MonoBehaviour
     public Text countText;
     public Text WinText;
     public Text lvlText;
+    public BezierSpline spline;
+    float progress;
+    float duration=50; 
+
     int xpCount;
     int toNextLvl;
 
     public GameObject panel;
+    float parametricT = 0; 
 
     // Start is called before the first frame update
     void Start()
@@ -61,6 +66,12 @@ public class CharacterCOntroller2D : MonoBehaviour
             lvlText.text = xpCount.ToString() +
                 "/" + toNextLvl.ToString();
 
+        }
+        if (other.gameObject.CompareTag("cellWall"))
+        {
+            var velo = rb2d.velocity * -1;
+
+            rb2d.AddForce(velo * speed * 8);
         }
 
         if (xpCount>10)

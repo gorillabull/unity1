@@ -38,6 +38,8 @@ public class Enemy : MonoBehaviour
         x = transform.position.x;
         y = transform.position.y;
         projectiles = new List<Bulnode>();
+        //me = GetComponent<Rigidbody2D>();
+
     }
 
     public void TakeDamage(int damage)
@@ -92,9 +94,17 @@ public class Enemy : MonoBehaviour
         x = 4 * (float)Math.Cos(t); 
         y = 3  * (float)Math.Sin(t);
         t += .01f;
+        var velo = me.velocity;
+        Debug.Log(velo);
+        if (me.velocity.x <= 5f && me.velocity.y <= 5f)
+        {
+            Vector2 newforce = new Vector2(r.Next(-10, 10), r.Next(-10, 10));
+            me.AddForce(newforce * 5000);
+        }
+        
 
         //  transform.position = new Vector3(x,y, 0);
-
+        
 
         //GameObject res = Instantiate(bullet, firepoint.position, firepoint.rotation);
 
@@ -150,11 +160,30 @@ public class Enemy : MonoBehaviour
     private void Shoot()
     {
 
-        GameObject res = Instantiate(bullet, firepoint.position, firepoint.rotation);
+        GameObject res = Instantiate(bullet, transform.position, transform.rotation);
+        ShootMe2 shootme2 = res.GetComponent<ShootMe2>();
+        shootme2.speed = r.Next(10, 50);
+
+        shootme2.InstantiateMe(transform.right);
+
+
         Bulnode bn = new Bulnode();
         bn.p = res;
         bn.dur = duration;
         projectiles.Add(bn);
+
+    }
+
+    void OnTriggerEnter2D(Collider2D other)
+    {
+
+        if (other.gameObject.CompareTag("cellWall"))
+        {
+            var velo2 = me.velocity.normalized;
+            me.velocity = new Vector2(0, 0);
+
+            me.AddForce(-1* velo2  * 16000);
+        }
 
     }
 
