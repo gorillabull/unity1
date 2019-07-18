@@ -22,7 +22,9 @@ public class CharacterCOntroller2D : MonoBehaviour
     int toNextLvl;
 
     public GameObject panel;
-    float parametricT = 0; 
+    float parametricT = 0;
+    public Slider slider;
+
 
     // Start is called before the first frame update
     void Start()
@@ -33,7 +35,7 @@ public class CharacterCOntroller2D : MonoBehaviour
         WinText.text = "";
         lvlText.text = "";
         xpCount = toNextLvl = 0;
-        toNextLvl = 2;
+        toNextLvl = 20;
     }
 
     // Update is called once per frame
@@ -66,6 +68,16 @@ public class CharacterCOntroller2D : MonoBehaviour
             lvlText.text = xpCount.ToString() +
                 "/" + toNextLvl.ToString();
 
+            if (xpCount > 0)
+            {
+                slider.value=((float)xpCount / (float)toNextLvl);
+            }
+
+            if (xpCount > 10)
+            {
+                panel.SetActive(true);
+            }
+
         }
         if (other.gameObject.CompareTag("cellWall"))
         {
@@ -74,10 +86,11 @@ public class CharacterCOntroller2D : MonoBehaviour
             rb2d.AddForce(velo * speed * 8);
         }
 
-        if (xpCount>10)
+        if (other.gameObject.CompareTag("NPCProjectile"))
         {
-            panel.SetActive(true);
+            TakeDamage(1);
         }
+
     }
 
     private void SetCountText()
@@ -94,5 +107,7 @@ public class CharacterCOntroller2D : MonoBehaviour
         xpCount--;
         lvlText.text = xpCount.ToString() +
                  "/" + toNextLvl.ToString();
+        slider.value = ((float)xpCount / (float)toNextLvl);
+
     }
 }

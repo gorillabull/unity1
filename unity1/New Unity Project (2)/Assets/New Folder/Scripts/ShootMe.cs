@@ -31,7 +31,7 @@ public class ShootMe : MonoBehaviour
         Enemy enemy = hitInfo.GetComponent<Enemy>();
         if (enemy!=null )
         {
-            if (enemy.name == "bigball")
+            if (enemy.name == "bigball" || enemy.name =="bac1(Clone)")
             {
                 enemy.TakeDamage(45);
               
