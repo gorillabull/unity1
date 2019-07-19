@@ -26,6 +26,7 @@ public class CharacterCOntroller2D : MonoBehaviour
     float parametricT = 0;
     public Slider slider;
 
+    public GameObject panel1, panel2, panel3;
 
     // Start is called before the first frame update
     void Start()
@@ -43,6 +44,25 @@ public class CharacterCOntroller2D : MonoBehaviour
     void Update()
     {
         
+    }
+    public void OpenPanelsMenu()
+    {
+        panel.SetActive(true);
+        Animator a1 = panel1.GetComponent<Animator>();
+        Animator a2 = panel2.GetComponent<Animator>();
+        Animator a3 = panel3.GetComponent<Animator>();
+
+        bool isopen = a1.GetBool("Open");
+        a1.SetBool("Open", !isopen);
+
+        isopen = a2.GetBool("Open");
+        a2.SetBool("Open", !isopen);
+
+        isopen = a3.GetBool("Open");
+        a3.SetBool("Open", !isopen);
+
+ 
+
     }
 
     void FixedUpdate()
@@ -77,7 +97,7 @@ public class CharacterCOntroller2D : MonoBehaviour
 
             if (xpCount > 10)
             {
-                panel.SetActive(true);
+                OpenPanelsMenu();
             }
 
         }
