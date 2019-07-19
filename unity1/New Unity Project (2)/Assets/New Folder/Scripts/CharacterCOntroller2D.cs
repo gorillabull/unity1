@@ -10,6 +10,7 @@ public class CharacterCOntroller2D : MonoBehaviour
     public float speed;
 
     private Rigidbody2D rb2d;
+    private CapsuleCollider2D cc2d; //to turn collision on off 
     private int count;
     public Text countText;
     public Text WinText;
@@ -52,8 +53,9 @@ public class CharacterCOntroller2D : MonoBehaviour
         rb2d.AddForce(movement * speed);
     }
  
-    void OnTriggerEnter2D(Collider2D other)
+    void OnTriggerEnter2D(Collider2D other )
     {
+        
         if (other.gameObject.CompareTag("PickUp"))
         {
             other.gameObject.SetActive(false);
@@ -90,6 +92,15 @@ public class CharacterCOntroller2D : MonoBehaviour
         {
             TakeDamage(1);
         }
+
+        if (other.gameObject.CompareTag("Cell1Wall"))
+        {
+            Debug.Log("splinee!!");
+            rb2d.AddForce(rb2d.velocity * -1 * 200000);
+
+             
+        }
+   
 
     }
 

@@ -8,6 +8,10 @@ TagManager:
   - bac1
   - cellWall
   - NPCProjectile
+  - Cell1Wall
+  - Cell2Wall
+  - Cell3Wall
+  - Cell4Wall
   layers:
   - Default
   - TransparentFX
@@ -44,4 +48,10 @@ TagManager:
   m_SortingLayers:
   - name: Default
     uniqueID: 0
+    locked: 0
+  - name: backest
+    uniqueID: 2554150497
+    locked: 0
+  - name: backest2
+    uniqueID: 1850478031
     locked: 0

@@ -95,7 +95,7 @@ public class Enemy : MonoBehaviour
         y = 3  * (float)Math.Sin(t);
         t += .01f;
         var velo = me.velocity;
-        Debug.Log(velo);
+        //Debug.Log(velo);
         if (me.velocity.x <= 5f && me.velocity.y <= 5f)
         {
             Vector2 newforce = new Vector2(r.Next(-10, 10), r.Next(-10, 10));
@@ -177,7 +177,7 @@ public class Enemy : MonoBehaviour
     void OnTriggerEnter2D(Collider2D other)
     {
 
-        if (other.gameObject.CompareTag("cellWall"))
+        if (other.gameObject.CompareTag("Cell"))
         {
             var velo2 = me.velocity.normalized;
             me.velocity = new Vector2(0, 0);
