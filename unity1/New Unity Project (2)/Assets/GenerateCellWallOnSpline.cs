@@ -49,7 +49,7 @@ public class GenerateCellWallOnSpline : MonoBehaviour
             Debug.Log(progress);
             Quaternion q = new Quaternion();
             q.SetLookRotation(spline.GetVelocity(progress));
-
+            
             if (progress > 1f)
             {
                 progress = 1f;

@@ -12,7 +12,7 @@ public class Enemy : MonoBehaviour
     public GameObject bac1;
     public GameObject player;
     public Transform firepoint;
-    public GameObject bullet; 
+    public GameObject bullet;
 
 
     public Rigidbody2D me;
@@ -29,15 +29,26 @@ public class Enemy : MonoBehaviour
     int time_Since_last_shot = 0;
     int perShotInterval = 0;
 
+    Vector3 position;
+    Vector2 addPos;
+
+    Collider2D myCollider;
+    public GameObject mycell;
+
     //
 
 
     // Start is called before the first frame update
     void Start()
     {
-        x = transform.position.x;
-        y = transform.position.y;
+        x = r.Next(-1, 1);
+        y = r.Next(-1, 1);
         projectiles = new List<Bulnode>();
+        position = new Vector3(transform.position.x,transform.position.y);
+        
+
+        myCollider = GetComponent<CircleCollider2D>();
+
         //me = GetComponent<Rigidbody2D>();
 
     }
@@ -49,7 +60,7 @@ public class Enemy : MonoBehaviour
         FragSpawn(fragSpawn);
 
 
-        if (hp<=0)
+        if (hp <= 0)
         {
             Die();
         }
@@ -59,19 +70,19 @@ public class Enemy : MonoBehaviour
     {
         Destroy(gameObject);
         //create some bacteria around itt
-        for(int i =35; i<r.Next(35,155);i++)
+        for (int i = 35; i < r.Next(35, 155); i++)
         {
             Instantiate(bac1,
                 new Vector3(
             gameObject.transform.position.x + r.Next(1, 10),
             gameObject.transform.position.y + r.Next(1, 10)),
             transform.rotation);
-        }    
+        }
     }
 
     private void FragSpawn(int count)
     {
-        for (int i = 1; i < r.Next(count, count+5); i++)
+        for (int i = 1; i < r.Next(count, count + 5); i++)
         {
             Instantiate(bac1,
                 new Vector3(
@@ -89,22 +100,35 @@ public class Enemy : MonoBehaviour
         Quaternion rot = Quaternion.AngleAxis(angle, Vector3.forward);
         transform.rotation = Quaternion.Slerp(transform.rotation, rot, 5f * Time.deltaTime);
 
-        //movement
-        R = R * t; 
-        x = 4 * (float)Math.Cos(t); 
-        y = 3  * (float)Math.Sin(t);
-        t += .01f;
-        var velo = me.velocity;
-        //Debug.Log(velo);
-        if (me.velocity.x <= 5f && me.velocity.y <= 5f)
+
+
+        if (Vector2.Distance(new Vector2(0, 0), new Vector2(position.x, position.y)) > 50)
         {
-            Vector2 newforce = new Vector2(r.Next(-10, 10), r.Next(-10, 10));
-            me.AddForce(newforce * 5000);
+            addPos = Quaternion.AngleAxis(-189f, Vector3.forward) * position;
+            Vector2 norm = addPos.normalized;
+            Vector3 n = new Vector3(addPos.x,addPos.y) + position;
+
+            Debug.Log(addPos);
+            x = addPos.x/100;
+            y = addPos.y/100;
+
+            position.x += x;
+            position.y += y;
+
+            x = norm.x / 3;
+            y = norm.y / 3;
         }
-        
+        else
+        {
+            position.x += x;
+            position.y += y;
+        }
+
+        transform.position = position;
+
 
         //  transform.position = new Vector3(x,y, 0);
-        
+
 
         //GameObject res = Instantiate(bullet, firepoint.position, firepoint.rotation);
 
@@ -182,7 +206,7 @@ public class Enemy : MonoBehaviour
             var velo2 = me.velocity.normalized;
             me.velocity = new Vector2(0, 0);
 
-            me.AddForce(-1* velo2  * 16000);
+            me.AddForce(-1 * velo2 * 16000);
         }
 
     }
