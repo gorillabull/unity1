@@ -41,8 +41,8 @@ public class Enemy : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        x = r.Next(-1, 1);
-        y = r.Next(-1, 1);
+        x = 1;
+        y = 1;
         projectiles = new List<Bulnode>();
         position = new Vector3(transform.position.x,transform.position.y);
         
@@ -102,13 +102,14 @@ public class Enemy : MonoBehaviour
 
 
 
-        if (Vector2.Distance(new Vector2(0, 0), new Vector2(position.x, position.y)) > 50)
+        if (Vector2.Distance(new Vector2(0, 0), new Vector2(transform.position.x, transform.position.y)) > 50)
         {
-            addPos = Quaternion.AngleAxis(-189f, Vector3.forward) * position;
+            addPos = Quaternion.AngleAxis((float)r.Next(90,189), Vector3.forward) * position;
             Vector2 norm = addPos.normalized;
             Vector3 n = new Vector3(addPos.x,addPos.y) + position;
 
             Debug.Log(addPos);
+
             x = addPos.x/100;
             y = addPos.y/100;
 

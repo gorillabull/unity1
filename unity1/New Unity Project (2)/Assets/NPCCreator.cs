@@ -32,7 +32,7 @@ public class NPCCreator : MonoBehaviour
             for (int i = 0; i < 5; i++)
             {
                 GameObject p =
-                Instantiate(ball, new Vector3(0, 0), this.transform.rotation);
+                Instantiate(ball, new Vector3(0,0), this.transform.rotation);
                 p.SetActive(false);
 
                 p.GetComponent<SpriteRenderer>().sprite =
