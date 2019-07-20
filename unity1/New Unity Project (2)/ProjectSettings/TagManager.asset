@@ -12,6 +12,7 @@ TagManager:
   - Cell2Wall
   - Cell3Wall
   - Cell4Wall
+  - Player1
   layers:
   - Default
   - TransparentFX

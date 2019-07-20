@@ -31,7 +31,7 @@ public class ShootMe2 : MonoBehaviour
         {
             if (enemy.name == "Player")
             {
-                ps.Emit(5);
+                //ps.Emit(5);
                 enemy.TakeDamage(45);
                 Destroy(gameObject);
 

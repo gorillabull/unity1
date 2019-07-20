@@ -113,13 +113,20 @@ public class CharacterCOntroller2D : MonoBehaviour
             TakeDamage(1);
         }
 
-        if (other.gameObject.CompareTag("Cell1Wall") ||
-            other.gameObject.CompareTag("Cell2Wall"))
+        if (other.gameObject.CompareTag("Cell1Wall") )
         {
-            Debug.Log("splinee!!");
             rb2d.AddForce(rb2d.velocity * 1 * 16);
 
+            CellScript.CurrentCell = other.gameObject;
+            CellScript.cellsNPCSCreated[CellScript.CurrentCell] = false;
+
+
              
+        }
+        if (other.gameObject.CompareTag("Cell2Wall"))
+        {
+            CellScript.CurrentCell = other.gameObject;
+            CellScript.cellsNPCSCreated[CellScript.CurrentCell] = false;
         }
    
 

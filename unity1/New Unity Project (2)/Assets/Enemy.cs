@@ -101,14 +101,20 @@ public class Enemy : MonoBehaviour
         transform.rotation = Quaternion.Slerp(transform.rotation, rot, 5f * Time.deltaTime);
 
 
+        Vector2 center = new Vector2();
+        if (CellScript.CurrentCell == null)
+        {
+            return; 
+        }
+        center = CellScript.CurrentCell.GetComponent<CircleCollider2D>().bounds.center;
 
-        if (Vector2.Distance(new Vector2(0, 0), new Vector2(transform.position.x, transform.position.y)) > 50)
+        if (Vector2.Distance(center, new Vector2(transform.position.x, transform.position.y)) > 50)
         {
             addPos = Quaternion.AngleAxis((float)r.Next(90,189), Vector3.forward) * position;
             Vector2 norm = addPos.normalized;
             Vector3 n = new Vector3(addPos.x,addPos.y) + position;
 
-            Debug.Log(addPos);
+ 
 
             x = addPos.x/100;
             y = addPos.y/100;
@@ -202,15 +208,16 @@ public class Enemy : MonoBehaviour
     void OnTriggerEnter2D(Collider2D other)
     {
 
-        if (other.gameObject.CompareTag("Cell"))
-        {
-            var velo2 = me.velocity.normalized;
-            me.velocity = new Vector2(0, 0);
+ 
 
-            me.AddForce(-1 * velo2 * 16000);
+        if (other.gameObject.CompareTag("Player"))
+        {
+            //create the sprites and set flag for created. 
         }
 
     }
+
+ 
 
 
 }
