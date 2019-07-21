@@ -1,0 +1,17 @@
+SOUNDS:
+sounds for:
+background music 
+player shoot sound 
+player projectile hit sound 
+enemy projectile hit sound 
+enemy death sound 
+player collect enemy drop 
+
+CODING:
+	UI: update leveling, reset xp bar on levelup ,  update ship models , properties of new ship
+tooltip on ship , update ships per new level 3 total.
+
+	GAMEPLAY: track npcs in each bubble, how many are alive, how many player has killed, 
+pause npcs in bubble once player leaves 
+	TODO: make intro graphic, display gameplay controsl on entering game (wasd, mouse shoot etc..)
+get ship graphics,  animate more things. 
