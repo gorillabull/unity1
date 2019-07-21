@@ -6,7 +6,7 @@ using UnityEngine;
 public class Enemy : MonoBehaviour
 {
 
-    public int hp = 100;
+    public int hp = 500;
     public int split_damage_min = 10;
     public GameObject deathEff;
     public GameObject bac1;
@@ -16,7 +16,7 @@ public class Enemy : MonoBehaviour
 
 
     public Rigidbody2D me;
-    float x, y;
+    public float x, y;
     System.Random r = new System.Random();
     float t = 0;
     float R = 1.5f;
@@ -30,10 +30,17 @@ public class Enemy : MonoBehaviour
     int perShotInterval = 0;
 
     Vector3 position;
-    Vector2 addPos;
+    private Vector2 addPos;
 
     Collider2D myCollider;
     public GameObject mycell;
+    /// <summary>
+    /// represents the center of the cell the npc is currently in 
+    /// </summary>
+    public Vector2 center;
+
+
+    private GameObject inWhatcell;
 
     //
 
@@ -57,7 +64,7 @@ public class Enemy : MonoBehaviour
     {
         hp -= damage;
         int fragSpawn = damage / split_damage_min;
-        FragSpawn(fragSpawn);
+        FragSpawn(1);
 
 
         if (hp <= 0)
@@ -82,14 +89,11 @@ public class Enemy : MonoBehaviour
 
     private void FragSpawn(int count)
     {
-        for (int i = 1; i < r.Next(count, count + 5); i++)
-        {
-            Instantiate(bac1,
+        Instantiate(bac1,
                 new Vector3(
             gameObject.transform.position.x + r.Next(1, 10),
             gameObject.transform.position.y + r.Next(1, 10)),
             transform.rotation);
-        }
     }
     // Update is called once per frame
     void Update()
@@ -101,20 +105,15 @@ public class Enemy : MonoBehaviour
         transform.rotation = Quaternion.Slerp(transform.rotation, rot, 5f * Time.deltaTime);
 
 
-        Vector2 center = new Vector2();
-        if (CellScript.CurrentCell == null)
-        {
-            return; 
-        }
-        center = CellScript.CurrentCell.GetComponent<CircleCollider2D>().bounds.center;
-
         if (Vector2.Distance(center, new Vector2(transform.position.x, transform.position.y)) > 50)
         {
-            addPos = Quaternion.AngleAxis((float)r.Next(90,189), Vector3.forward) * position;
-            Vector2 norm = addPos.normalized;
-            Vector3 n = new Vector3(addPos.x,addPos.y) + position;
+            addPos = Quaternion.AngleAxis(UnityEngine.Random.Range(90f,189f)
+                , Vector3.forward) * 
+                (transform.position - new Vector3(center.x,center.y));
 
- 
+            Vector2 norm = addPos.normalized;
+
+
 
             x = addPos.x/100;
             y = addPos.y/100;
@@ -127,17 +126,21 @@ public class Enemy : MonoBehaviour
         }
         else
         {
-            position.x += x;
+            if (UnityEngine.Random.Range(0,100)<1.5f)  // a chance to move in a diff direction
+            {
+                float stat1 = .05f;
+
+                x += UnityEngine.Random.Range(-stat1, stat1);
+                y += UnityEngine.Random.Range(-stat1, stat1);
+            }
+
+            position.x += x ;
             position.y += y;
         }
 
         transform.position = position;
 
 
-        //  transform.position = new Vector3(x,y, 0);
-
-
-        //GameObject res = Instantiate(bullet, firepoint.position, firepoint.rotation);
 
         //shooting 
         if (true)
@@ -213,6 +216,19 @@ public class Enemy : MonoBehaviour
         if (other.gameObject.CompareTag("Player"))
         {
             //create the sprites and set flag for created. 
+        }
+
+        if (other.gameObject.CompareTag("Cell1Wall"))
+        {
+
+            inWhatcell = other.gameObject;
+        }
+
+        if (other.gameObject.CompareTag("Cell2Wall"))
+        {
+             
+            inWhatcell = other.gameObject;
+
         }
 
     }

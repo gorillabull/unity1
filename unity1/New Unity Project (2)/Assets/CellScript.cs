@@ -30,6 +30,17 @@ public class CellScript : MonoBehaviour
          
     }
 
+    void Awake()
+    {
+        Debug.Log("active scqirpt");
+        if (balls == null)
+        {
+            balls = new List<GameObject>();
+            frag1 = new Dictionary<int, GameObject>();
+            destoyList = new List<GameObject>();
+            cellsNPCSCreated = new Dictionary<GameObject, bool>();
+        }
+    }
     private void OnTriggerExit2D(Collider2D other)
     {
         if (other.gameObject.CompareTag("Player1"))
@@ -51,21 +62,16 @@ public class CellScript : MonoBehaviour
 
     void OnTriggerEnter2D(Collider2D other)
     {
-        if (balls == null)
-        {
-            balls = new List<GameObject>();
-            frag1 = new Dictionary<int, GameObject>();
-            destoyList = new List<GameObject>();
-            cellsNPCSCreated = new Dictionary<GameObject, bool>();
-        }
 
+         
         if (other.gameObject.CompareTag("Player1"))
         {
-            //create the sprites and set flag for created. 
-            if (cellsNPCSCreated[this.gameObject] == false)
+            if (!cellsNPCSCreated.ContainsKey(this.gameObject))
             {
-                create();
+                cellsNPCSCreated.Add(this.gameObject, true  );
+                    create();
             }
+
 
         }
 
@@ -84,15 +90,18 @@ public class CellScript : MonoBehaviour
     {
 
 
-
+        Vector3 pos =   GetComponent<CircleCollider2D>().bounds.center;
+                                   
         for (int i = 0; i < 5; i++)
         {
             GameObject p =
-            Instantiate(ball, new Vector3(0, 0), this.transform.rotation);
+            Instantiate(ball, pos, this.transform.rotation);
             p.SetActive(false);
 
             p.GetComponent<SpriteRenderer>().sprite =
               sprites[i].GetComponent<SpriteRenderer>().sprite;
+
+            p.GetComponent<Enemy>().center = GetComponent<Collider2D>().bounds.center;
 
             balls.Add(p);
         }

@@ -29,9 +29,12 @@ public class ShootMe : MonoBehaviour
     private void OnTriggerEnter2D(Collider2D hitInfo)
     {
         Enemy enemy = hitInfo.GetComponent<Enemy>();
-        if (enemy!=null )
+        if (enemy != null)
         {
-            if (enemy.name == "bigball" || enemy.name =="bac1(Clone)")
+            if (enemy.name == "bigball" || 
+                enemy.name == "bac1(Clone)" || 
+                enemy.name == "bigball2(Clone)"||
+                enemy.name == "bigball2")
             {
                 enemy.TakeDamage(45);
               
@@ -40,16 +43,7 @@ public class ShootMe : MonoBehaviour
 
             }
 
-            if (enemy.name=="bigball2")
-            {
-                enemy.TakeDamage(45);
-                Destroy(gameObject);
-            }
-            if (enemy.name == "bigball2(Clone)")
-            {
-                enemy.TakeDamage(45);
-                Destroy(gameObject);
-            }
+    
 
 
         }
