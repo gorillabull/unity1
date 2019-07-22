@@ -13,6 +13,7 @@ TagManager:
   - Cell3Wall
   - Cell4Wall
   - Player1
+  - bball2
   layers:
   - Default
   - TransparentFX

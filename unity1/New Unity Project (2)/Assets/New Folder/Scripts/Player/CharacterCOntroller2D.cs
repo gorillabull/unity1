@@ -13,7 +13,8 @@ public struct panelShipInfo
     public Text[] shipNames; //names of each ship for the frame 
     public Text[] shipDesc; //a  description of the ship 
     //public Image[] shipSprites; //where to attach the sprite for the ship  
-    public Sprite[] shipSpritesPrefab;  //contains the sprites for each ship the player can play 
+    public Image[] shipSpritesPrefab;  //contains the sprites for each ship the player can play 
+    //--> use shipSpritesPrefab.sprite to access 
 }
 public class CharacterCOntroller2D : MonoBehaviour
 {
@@ -45,31 +46,37 @@ public class CharacterCOntroller2D : MonoBehaviour
     public Text[] shipNames;        //where to attach the ship names 
     public Text[] shipDesc;         //the ship desc (which panel)
     public Image[] shipSprites;     //to attach the ship sprites on panels 
-
+    public panelShipInfo [] panel1Info;
 
     // Start is called before the first frame update
-    void Start()
+    void Awake()
     {
         rb2d = GetComponent<Rigidbody2D>();
-        LevelsOpened = new List<bool>();//keeps track if a level has been opened. 
+        LevelsOpened = new List<bool>(100);//keeps track if a level has been opened. 
+        for (int i = 0; i < 4; i++)
+        {
+            LevelsOpened.Add(false);
+        }
+        
         spi = new List<panelShipInfo>();
 
         count = 0;
         SetCountText();
         WinText.text = "";
         lvlText.text = "";
-        xpCount = toNextLvl = 0;
-        toNextLvl = 120;
+        xpCount =   0;
 
+        toNextLvl = 12;
+ 
         int inc = 0;
 
 
 
         //init ship names;
-        panelShipInfo spi1 = new panelShipInfo();
-        
+         
+
         //panel 1 
-        spi1.shipNames[inc] = "Axe Ship";
+        /*spi1.shipNames[inc] = "Axe Ship";
         spi1.shipNames[inc] = "Axe Ship";
         spi1.shipNames[inc] = "Axe Ship";
 
@@ -84,7 +91,7 @@ public class CharacterCOntroller2D : MonoBehaviour
         spi1.shipSprites[inc].sprite=  ship.shipSpritesPrefab[inc];
         shipSprites[inc].sprite  = spi1.shipSprites[inc].sprite;
         spi1.shipSprites[inc].sprite=  ship.shipSpritesPrefab[inc];
-        shipSprites[inc].sprite  = spi1.shipSprites[inc].sprite; 
+        shipSprites[inc].sprite  = spi1.shipSprites[inc].sprite; */
         //----------------------------------------------------------------
         
     }
@@ -98,7 +105,7 @@ public class CharacterCOntroller2D : MonoBehaviour
     {
         if (!LevelsOpened[level])
         {
-            panel.SetActive(true);
+            
             Animator a1 = panel1.GetComponent<Animator>();
             Animator a2 = panel2.GetComponent<Animator>();
             Animator a3 = panel3.GetComponent<Animator>();
@@ -118,9 +125,16 @@ public class CharacterCOntroller2D : MonoBehaviour
             //set panel stuff here (ship info and sprites)
 
             LevelsOpened[level] = true;
+            for (int i = 0; i < 3; i++)
+            {
+                shipNames[i].text = panel1Info[level].shipNames[i].text;
+                shipDesc[i].text = panel1Info[level].shipDesc[i].text;
+                shipSprites[i].sprite = panel1Info[level].shipSpritesPrefab[i].sprite;
+            }
+            
             level++;
 
-            
+            panel.SetActive(true);
         }
 
 

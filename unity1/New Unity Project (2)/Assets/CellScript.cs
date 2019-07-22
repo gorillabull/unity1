@@ -17,11 +17,13 @@ public class CellScript : MonoBehaviour
     static bool created = false;
 
     Dictionary<int, GameObject> frag1;
-    List<GameObject> destoyList;
+    List<GameObject> destoyList_FragSpawn; //for stuff that spawns when npcs are hit 
+    List<GameObject> pauseList_NPC;
+
     // Start is called before the first frame update
     void Start()
     {
-        Debug.Log("STARTING CELLL");
+        
     }
 
     // Update is called once per frame
@@ -32,13 +34,14 @@ public class CellScript : MonoBehaviour
 
     void Awake()
     {
-        Debug.Log("active scqirpt");
+ 
         if (balls == null)
         {
             balls = new List<GameObject>();
             frag1 = new Dictionary<int, GameObject>();
-            destoyList = new List<GameObject>();
+            destoyList_FragSpawn = new List<GameObject>();
             cellsNPCSCreated = new Dictionary<GameObject, bool>();
+            pauseList_NPC = new List<GameObject>();
         }
     }
     private void OnTriggerExit2D(Collider2D other)
@@ -48,15 +51,21 @@ public class CellScript : MonoBehaviour
             //clean up any bubbles. 
             foreach (var item in frag1)
             {
-                destoyList.Add(item.Value);
+                destoyList_FragSpawn.Add(item.Value);
             }
 
-            for (int i = 0; i < destoyList.Count; i++)
+            for (int i = 0; i < destoyList_FragSpawn.Count; i++)
             {
-                Destroy(destoyList[i]);
+                Destroy(destoyList_FragSpawn[i]);
             }
+
             frag1.Clear();
-            destoyList.Clear();
+            destoyList_FragSpawn.Clear();
+
+            foreach (var item in pauseList_NPC)
+            {
+                item.gameObject.SetActive(false);
+            }
         }
     }
 
@@ -71,6 +80,11 @@ public class CellScript : MonoBehaviour
                 cellsNPCSCreated.Add(this.gameObject, true  );
                     create();
             }
+            //pause the npcs 
+            foreach (var item in pauseList_NPC)
+            {
+                item.gameObject.SetActive(true);
+            }
 
 
         }
@@ -82,6 +96,11 @@ public class CellScript : MonoBehaviour
                 frag1.Add(other.GetInstanceID(), other.gameObject);
             }
 
+        }
+
+        if (other.gameObject.CompareTag("bball2")   )
+        {
+            pauseList_NPC.Add(other.gameObject);
         }
 
     }
