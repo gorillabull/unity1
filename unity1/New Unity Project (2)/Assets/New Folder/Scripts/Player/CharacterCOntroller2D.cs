@@ -10,9 +10,9 @@ using UnityEngine.UI;
 [System.Serializable]
 public struct panelShipInfo
 {
-    public Text[] shipNames;
-    public Text[] shipDesc;
-    public Image[] shipSprites;
+    public Text[] shipNames; //names of each ship for the frame 
+    public Text[] shipDesc; //a  description of the ship 
+    //public Image[] shipSprites; //where to attach the sprite for the ship  
     public Sprite[] shipSpritesPrefab;  //contains the sprites for each ship the player can play 
 }
 public class CharacterCOntroller2D : MonoBehaviour
@@ -42,9 +42,9 @@ public class CharacterCOntroller2D : MonoBehaviour
     public GameObject panel1, panel2, panel3;
 
     private List<panelShipInfo> spi;
-    public Text[] shipNames;
-    public Text[] shipDesc;
-    public Image[] shipSprites;
+    public Text[] shipNames;        //where to attach the ship names 
+    public Text[] shipDesc;         //the ship desc (which panel)
+    public Image[] shipSprites;     //to attach the ship sprites on panels 
 
 
     // Start is called before the first frame update
@@ -61,9 +61,31 @@ public class CharacterCOntroller2D : MonoBehaviour
         xpCount = toNextLvl = 0;
         toNextLvl = 120;
 
+        int inc = 0;
+
+
+
         //init ship names;
         panelShipInfo spi1 = new panelShipInfo();
         
+        //panel 1 
+        spi1.shipNames[inc] = "Axe Ship";
+        spi1.shipNames[inc] = "Axe Ship";
+        spi1.shipNames[inc] = "Axe Ship";
+
+        spi1.shipDesc[inc]= "past string here ";
+        spi1.shipDesc[inc]= "past string here ";
+        spi1.shipDesc[inc]= "past string here ";
+        //also set a color for this 
+
+
+        spi1.shipSprites[inc].sprite=  ship.shipSpritesPrefab[inc];
+        shipSprites[inc].sprite  = spi1.shipSprites[inc].sprite;
+        spi1.shipSprites[inc].sprite=  ship.shipSpritesPrefab[inc];
+        shipSprites[inc].sprite  = spi1.shipSprites[inc].sprite;
+        spi1.shipSprites[inc].sprite=  ship.shipSpritesPrefab[inc];
+        shipSprites[inc].sprite  = spi1.shipSprites[inc].sprite; 
+        //----------------------------------------------------------------
         
     }
 
@@ -93,6 +115,7 @@ public class CharacterCOntroller2D : MonoBehaviour
             //reset leveling stuff
             xpCount = 0;
             toNextLvl = (int)((double)toNextLvl * 1.3);
+            //set panel stuff here (ship info and sprites)
 
             LevelsOpened[level] = true;
             level++;
